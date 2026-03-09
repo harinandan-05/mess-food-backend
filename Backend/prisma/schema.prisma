@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model MessEntry {
+  id             String   @id @default(uuid())
+  date           String   // Storing as YYYY-MM-DD to match frontend DailyEntry
+  dayOfWeek      String
+  mealtype       String
+  studentsTotal  Int
+  studentsAte    Int
+  foodpreparedkg Float
+  foodwastedKg   Float
+  createdAt      DateTime @default(now())
+}
+
+model Menu {
+  id        String   @id @default(uuid())
+  dayOfWeek String   // e.g. "Monday", "Tuesday"
+  mealType  String   // e.g. "Breakfast", "Lunch", "Dinner"
+  items     String  
+  createdAt DateTime @default(now())
+
+  @@unique([dayOfWeek, mealType])
+}
